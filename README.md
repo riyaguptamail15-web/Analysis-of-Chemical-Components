@@ -1,140 +1,206 @@
 # Analysis of Chemical Components: Content-Based Cosmetic Recommendation System
 
-A machine learning and data analytics project that recommends similar cosmetic products by analyzing their chemical ingredients instead of user ratings or purchase history.
+A Machine Learning and Data Analytics project that recommends chemically similar cosmetic products by analyzing their ingredient compositions instead of user ratings or purchase history.
 
-This project was completed as part of the **MedTourEasy (MTE) Data Analytics Internship** using a real-world Sephora cosmetics dataset containing **1,472 skincare and beauty products**.
+**Internship:** MedTourEasy (MTE) Data Analytics Internship
 
 ---
 
 ## Project Overview
 
-Choosing skincare products can be confusing because ingredient labels are long and difficult to interpret. Two moisturizers may have nearly identical formulations even if they belong to different brands.
+Choosing the right skincare product is often difficult because ingredient lists are long and complex. Two moisturizers from different brands may have nearly identical formulations, while products with similar claims may contain completely different chemical compositions.
 
-The objective of this project is to build a **content-based recommendation system** that identifies products with similar ingredient compositions. Products are converted into numerical representations using text processing techniques, visualized using machine learning, and compared through ingredient similarity.
+This project develops a **content-based recommendation system** that identifies similar cosmetic products using their ingredients. The workflow includes data preprocessing, Natural Language Processing (tokenization), feature engineering, dimensionality reduction using **t-SNE**, and an interactive visualization built with **Bokeh**.
 
 ---
 
 ## Problem Statement
 
-Develop a recommendation system that:
+Develop a recommendation system that can:
 
-- Filters products based on category and skin type
-- Processes cosmetic ingredient lists
-- Converts ingredients into machine-readable features
-- Visualizes product similarity using dimensionality reduction
-- Compares chemically similar cosmetic products
+* Filter products based on category and skin type
+* Process cosmetic ingredient lists using NLP techniques
+* Convert ingredients into machine-readable numerical features
+* Visualize chemically similar products using Machine Learning
+* Validate recommendations through ingredient comparison
 
 ---
 
-## Dataset
+## Dataset Information
 
-- **Source:** Sephora Cosmetics Dataset
-- **Total Products:** 1,472
-- **Category Used:** Moisturizers
-- **Skin Type:** Dry Skin
+| Feature            | Value                     |
+| ------------------ | ------------------------- |
+| Dataset            | Sephora Cosmetics Dataset |
+| Total Products     | 1,472                     |
+| Filtered Products  | 190 Moisturizers          |
+| Skin Type          | Dry Skin                  |
+| Unique Ingredients | 2,233                     |
 
-Important features include:
+### Dataset Attributes
 
-| Column | Description |
-|---------|-------------|
-| Brand | Cosmetic brand |
-| Name | Product name |
-| Label | Product category |
-| Price | Product price |
-| Rank | Customer rating |
-| Ingredients | Complete ingredient list |
-| Dry | Suitability for dry skin |
+* **Brand** — Cosmetic brand name
+* **Name** — Product name
+* **Label** — Product category
+* **Price** — Retail price
+* **Rank** — Customer rating
+* **Ingredients** — Complete ingredient list
+* **Dry** — Indicates suitability for dry skin
+* **Normal** — Indicates suitability for normal skin
+* **Oily** — Indicates suitability for oily skin
+* **Sensitive** — Indicates suitability for sensitive skin
 
 ---
 
 ## Technologies Used
 
-- Python
-- Pandas
-- NumPy
-- Scikit-learn
-- Bokeh
-- Jupyter Notebook
+* Python
+* Pandas
+* NumPy
+* Scikit-learn
+* Bokeh
+* Jupyter Notebook
+* Git & GitHub
 
 ---
 
 ## Project Workflow
 
-### 1. Data Loading & Exploration
+### Task 1 — Data Loading & Exploration
 
-- Imported the dataset using Pandas
-- Inspected data structure and column types
-- Analyzed distribution of cosmetic categories
+* Imported the Sephora cosmetics dataset using Pandas.
+* Explored dataset structure, columns, and product categories.
+* Performed initial exploratory data analysis.
 
-### 2. Data Filtering
+### Task 2 — Data Filtering
 
-- Selected only **Moisturizers**
-- Filtered products suitable for **Dry Skin**
-- Reset dataframe indexing for clean analysis
+* Filtered only **Moisturizers**.
+* Selected products suitable for **Dry Skin**.
+* Reset indexing to create a clean working dataset.
 
-### 3. Ingredient Tokenization
+### Task 3 — Ingredient Tokenization
 
-- Converted ingredient lists to lowercase
-- Split each ingredient string into individual tokens
-- Created a dictionary of unique ingredients
+* Converted ingredient text to lowercase.
+* Tokenized ingredient lists into individual ingredients.
+* Generated a vocabulary of **2,233 unique ingredients**.
 
-### 4. Feature Engineering
+### Task 4 — Document-Term Matrix (DTM)
 
-- Constructed a **Document-Term Matrix (DTM)**
-- Applied **One-Hot Encoding** to represent ingredient presence
-- Generated binary feature vectors for every product
+Created a binary matrix where:
 
-### 5. Machine Learning
+* Rows represent cosmetic products.
+* Columns represent unique ingredients.
+* Values indicate ingredient presence (**1**) or absence (**0**).
 
-Applied **t-SNE (t-Distributed Stochastic Neighbor Embedding)** to reduce hundreds of ingredient dimensions into two-dimensional coordinates while preserving local similarity between products.
+### Task 5 — One-Hot Encoding
 
-### 6. Interactive Visualization
+Implemented a custom one-hot encoder to convert each moisturizer into a **2233-dimensional binary feature vector** suitable for machine learning.
 
-Built an interactive scatter plot using **Bokeh**, allowing users to:
+### Task 6 — Feature Matrix Generation
 
-- View product clusters
-- Hover over products
-- Display brand, product name, price, and rating
+Populated the complete binary feature matrix for all **190 moisturizer products** using the one-hot encoder.
 
-### 7. Product Comparison
+### Task 7 — Dimensionality Reduction using t-SNE
 
-Compared ingredient compositions of similar cosmetic products to validate recommendation quality.
+Applied **t-Distributed Stochastic Neighbor Embedding (t-SNE)** to reduce the 2233-dimensional feature space into two dimensions while preserving local similarity between products.
+
+### Task 8 — Interactive Visualization
+
+Developed an interactive scatter plot using **Bokeh**, where each point represents a moisturizer positioned according to its ingredient similarity.
+
+### Task 9 & 10 — Hover Interaction & Visualization
+
+Enhanced the visualization by adding interactive hover functionality displaying:
+
+* Brand
+* Product Name
+* Price
+* Customer Rating
+
+The graph also supports zooming, panning, resetting, and saving.
+
+### Task 11 — Recommendation Validation
+
+Validated the recommendation system by comparing both **similar** and **dissimilar** products through ingredient overlap analysis, confirming the effectiveness of the content-based recommendation approach.
 
 ---
 
-## Machine Learning Concept
+## Machine Learning Pipeline
 
-This project uses **unsupervised learning** for dimensionality reduction.
+1. Load & Explore Dataset
+2. Filter Moisturizers for Dry Skin
+3. Tokenize Ingredient Lists
+4. Create Document-Term Matrix
+5. Apply One-HHot Encoding
+6. Generate Binary Feature Matrix
+7. Reduce Dimensions using t-SNE
+8. Visualize Product Similarity with Bokeh
+9. Validate Recommendations using Ingredient Comparison
 
-- **Input:** Ingredient-based binary vectors
-- **Technique:** t-SNE
-- **Output:** Two-dimensional representation of chemically similar products
-
-The closer two products appear on the visualization, the more similar their ingredient compositions are likely to be.
+This project uses **unsupervised learning** because it identifies similarity patterns without labeled output classes.
 
 ---
 
-## Key Learning Outcomes
+## Results
 
-- Data preprocessing
-- Natural Language Processing (Tokenization)
-- Feature Engineering
-- One-Hot Encoding
-- Document-Term Matrix creation
-- Dimensionality Reduction with t-SNE
-- Interactive Data Visualization
-- Content-Based Recommendation Systems
+* Filtered **190** moisturizers from **1,472** cosmetic products.
+* Identified **2,233 unique ingredients**.
+* Constructed a **190 × 2233** binary Document-Term Matrix.
+* Applied **t-SNE** to visualize chemically similar products.
+* Built an interactive recommendation map using **Bokeh**.
+* Validated both similar and dissimilar formulations through ingredient overlap analysis.
+
+---
+
+## Visualization
+
+The interactive **t-SNE scatter plot** below represents each moisturizer as a point in a two-dimensional space. Products positioned closer together have more similar ingredient compositions, while products farther apart represent chemically different formulations.
+
+![t-SNE Visualization] (images/tsne_visualization.png)
+
+---
+
+## Validation Summary
+
+### Similar Product Analysis (Products 32, 75 & 80)
+
+The comparison showed varying levels of ingredient similarity:
+
+* **Products 75 & 80** shared the highest number of common ingredients, indicating closely related moisturizing formulations.
+* **Products 32 & 80** shared only one common ingredient (*Glycyrrhiza Glabra/Licorice Root Extract*).
+* **Products 32 & 75** showed no exact token matches.
+
+**Why 0 or 1 common ingredient?**
+
+This project performs **basic tokenization** with exact string matching. Minor formatting differences—such as extra spaces, `*`/`**` symbols, singular vs. plural wording, or slight naming variations (e.g., `caprylic/capric triglycerides` vs. `caprylic/ capric triglyceride`)—are treated as different tokens. Therefore, the actual chemical similarity may be higher than the reported overlap, and advanced text normalization would improve matching accuracy.
+
+### Dissimilar Product Analysis (Products 128 & 152)
+
+Products **128 and 152** shared **0 common ingredients**, indicating genuinely different chemical formulations rather than formatting differences. This validates that products positioned far apart in the t-SNE space represent highly dissimilar ingredient compositions.
 
 ---
 
 ## Repository Structure
 
+```text
 Analysis-of-Chemical-Components/
-├── analysis.ipynb
-├── cosmetics.csv
-├── README.md
-├── requirements.txt
-└── .gitignore
+│
+├── analysis.ipynb              # Complete project notebook
+├── cosmetics.csv               # Sephora cosmetics dataset
+├── requirements.txt            # Required Python libraries
+├── .gitignore                  # Ignored Jupyter checkpoint files
+├── README.md                   # Project documentation
+└── images/
+    └── tsne_visualization.png  # Bokeh visualization screenshot
+```
+
+---
+
+## Future Improvements
+
+* Normalize ingredient synonyms and naming conventions.
+* Implement cosine similarity for Top-5 product recommendations.
+* Build a Streamlit web application for user interaction.
+* Add ingredient search and product recommendation interface.
 
 ---
 
@@ -142,4 +208,7 @@ Analysis-of-Chemical-Components/
 
 **Riya Gupta**
 
-Data Analytics Project completed during the **MedTourEasy Internship (MTE)**.
+B.Tech Electronics & Communication Engineering
+
+Data Analytics Project completed as part of the **MedTourEasy (MTE) Internship**.
+MedTourEasy Internship (MTE)**.
